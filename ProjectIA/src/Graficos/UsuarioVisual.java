@@ -255,11 +255,11 @@ public class UsuarioVisual extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
-
+        System.out.println("Tamaño matrix "+matrix[0].length );
       
-            Profundida profundida = new Profundida(matrix.clone(), init);
+            Amplitud amplitud = new Amplitud(matrix.clone(), init,5);
             ArrayList<Bloque> s = new ArrayList<>();
-            s = profundida.BusquedaProfindida();
+            s = amplitud.BusquedaAmplitud();
             HiloGrafico hilo = new HiloGrafico(s, this);
             hilo.execute();
        
