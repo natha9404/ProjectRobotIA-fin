@@ -30,12 +30,12 @@ public class HiloGrafico extends SwingWorker< Integer, Integer> {
         mapa = grafico.matrix;
         for (int i = 0; i < entrada.size(); i++) {
             try {
-                mapa[entrada.get(i).getX()][entrada.get(i).getY()].setContenido(2);
+                mapa[entrada.get(i).getUbicacion().x][entrada.get(i).getUbicacion().y].setContenido(2);
                 grafico.creacionBotones(mapa);
                 Thread.sleep(1000);
                 grafico.printmatrix(mapa);
                 grafico.creacionBotones(mapa);
-                mapa[entrada.get(i).getX()][entrada.get(i).getY()].setContenido(-1);
+                mapa[entrada.get(i).getUbicacion().x][entrada.get(i).getUbicacion().y].setContenido(-1);
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(null, "Error en Tiempo de espera del Hilo de Ejecucion");
             }

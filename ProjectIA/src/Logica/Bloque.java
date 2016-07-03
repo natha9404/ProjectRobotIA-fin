@@ -5,38 +5,88 @@
  */
 package Logica;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Mauro
  */
 public class Bloque {
 
-    private int contenido;
-    private String ultimoMovimiento;
-    private Bloque padre;
-    private int identificador;
-    public int x = 0;
-    public int y = 0;
-    public boolean raiz;
-    private int costo;
+    public int contenido;
+    public ArrayList<ArrayList> estado;   //Representa la matriz del juego para ese nodo
+    public Coordenadas ubicacion;               //Indica en que punto de la matriz estado se encuentra el caballo
+    public String tipo;                   //Puede ser MIN o MAX
+    public String movimiento;             //Representa el movimiento que se realizó para llegar a ese estado
+    public int profundidad;               //La profundidad del nodo
+    public int utilidad;                  //La utilidad total en el algoritmo minimax
+    public int puntosMovimiento;          //Representa los puntos que ganó al realizar ese movimiento
+    public int padre;                     //Referencia al nodo padre
+    public int puntosCaballoBlanco;       //Indica la cantidad de puntos que tiene la maquina en ese estado
+    public int puntosCaballoNegro;       //Indica la cantidad de puntos que tiene el usuario en ese estado
 
     public Bloque() {
-        this.contenido = 0;
-        this.ultimoMovimiento = "";
-        this.raiz = false;
-        this.costo = 0;
+        estado = new ArrayList<>();
+        movimiento = "";
+        ubicacion = new Coordenadas(-1, -1);
+        profundidad = 0;
+        puntosCaballoNegro = 0;
+        puntosCaballoBlanco = 0;
     }
 
-    public String getUltimoMovimiento() {
-        return ultimoMovimiento;
+    public Bloque(ArrayList<ArrayList> estado, String movimiento, int puntosMovimiento) {
+        this.estado = estado;
+        this.movimiento = movimiento;
+        this.puntosMovimiento = puntosMovimiento;
+
+        this.puntosCaballoNegro = 0;
+        this.puntosCaballoBlanco = 0;
+
+        tipo = "";
+        padre = 0;
+        profundidad = 0;
+        utilidad = 0;
+        ubicacion = new Coordenadas(-1, -1);
     }
 
-    public void setUltimoMovimiento(String ultimoMovimiento) {
-        this.ultimoMovimiento = ultimoMovimiento;
+    public void setEstado(ArrayList<ArrayList> estado) {
+        this.estado = estado;
     }
 
-    public Bloque(int contenido) {
-        this.contenido = contenido;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setProfundidad(int profundidad) {
+        this.profundidad = profundidad;
+    }
+
+    public void setUtilidad(int utilidad) {
+        this.utilidad = utilidad;
+    }
+
+    public void setPadre(int padre) {
+        this.padre = padre;
+    }
+
+    public void setUbicacion(Coordenadas ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public void setPuntosCaballoBlanco(int puntosCaballoBlanco) {
+        this.puntosCaballoBlanco = puntosCaballoBlanco;
+    }
+
+    public void setPuntosCaballoDorado(int puntosCaballoNegro) {
+        this.puntosCaballoNegro = puntosCaballoNegro;
+    }
+
+    public int getPuntosCaballoBlanco() {
+        return puntosCaballoBlanco;
+    }
+
+    public int getPuntosCaballoNegro() {
+        return puntosCaballoNegro;
     }
 
     public int getContenido() {
@@ -47,56 +97,8 @@ public class Bloque {
         this.contenido = contenido;
     }
 
-    public int getX() {
-        return x;
+    public Coordenadas getUbicacion() {
+        return ubicacion;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public Bloque getPadre() {
-        return padre;
-    }
-
-    public void setPadre(Bloque padre) {
-        this.padre = padre;
-    }
-
-    public int getIdentificador() {
-        return identificador;
-    }
-
-    public void setIdentificador(int identificador) {
-        this.identificador = identificador;
-    }
-
-    public int getCosto() {
-        return costo;
-    }
-
-    public void setCosto(int costo) {
-        this.costo = costo;
-    }
-
-    public int comparo(Bloque other) {
-        int salida = 0;
-
-        if (costo > other.getCosto()) {
-            salida = 1;
-        }
-        if (costo < other.getCosto()) {
-            salida = -1;
-        }
-
-        return salida;
-    }
 }

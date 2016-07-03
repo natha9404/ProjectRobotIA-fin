@@ -6,19 +6,13 @@
 package Graficos;
 
 import Logica.Bloque;
-import Logica.Coordenada;
-import Archivo.Leer;
-import Logica.A_asterisco;
+
 import Logica.Amplitud;
-import Logica.Avara;
-import Logica.Costo_uniforme;
-import Logica.Profundida;
 import java.awt.GridLayout;
 import Recursos.IcoRecurso;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,24 +24,22 @@ public class UsuarioVisual extends javax.swing.JFrame {
     /**
      * Creates new form UsuarioVisual
      */
-    Leer lectura = new Leer();
+   
     ArrayList<Bloque> objetivos;
     public Bloque[][] matrix;
     public Bloque[][] matrixGrafico;
-    Coordenada inicia = new Coordenada();
     Bloque init = new Bloque();
 
     public UsuarioVisual() {
         initComponents();
         //Funcines para el Inicio del Mapa
         this.objetivos = new ArrayList<>();
-        this.matrix = lectura.ReadFile();
-        this.objetivos = (ArrayList<Bloque>) lectura.getObjetivos().clone();
-        this.inicia = lectura.inicio;
-        init = lectura.init;
+//        this.matrix = lectura.ReadFile();
+//      this.objetivos = (ArrayList<Bloque>) lectura.getObjetivos().clone();
+//       init = lectura.init;
         this.creacionBotones(matrix);
         this.repaint();
-        this.setSize(450, 491);
+        this.setSize(550, 520);
         //setResizable(false);
     }
 
@@ -111,8 +103,9 @@ public class UsuarioVisual extends javax.swing.JFrame {
         jPmapa.updateUI();
         jPmapa.revalidate();
         jPmapa.repaint();
-        //this.setSize(450, 493);
+        
     }
+    
 
     void printmatrix(Bloque[][] matrix) {
         System.out.println("Pintando Matriz");
@@ -128,16 +121,16 @@ public class UsuarioVisual extends javax.swing.JFrame {
 
     private void MostrarCamino(ArrayList<Bloque> entrada) {
         /*Esta funcion Pinta el camino probeniente de los algoritmos de busqueda*/
-        Bloque[][] mapa = new Bloque[10][10];
+        Bloque[][] mapa = new Bloque[8][8];
         mapa = matrix.clone();
         for (int i = 0; i < entrada.size(); i++) {
             try {
-                mapa[entrada.get(i).getX()][entrada.get(i).getY()].setContenido(2);
+                mapa[entrada.get(i).getUbicacion().x][entrada.get(i).getUbicacion().y].setContenido(2);
                 creacionBotones(mapa);
-                Thread.sleep(1000);
+                Thread.sleep(800);
                 printmatrix(mapa);
                 creacionBotones(mapa);
-                mapa[entrada.get(i).getX()][entrada.get(i).getY()].setContenido(-1);
+                mapa[entrada.get(i).getUbicacion().x][entrada.get(i).getUbicacion().y].setContenido(-1);
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(this, "Error en Tiempo de espera del Hilo de Ejecucion");
             }
@@ -198,7 +191,7 @@ public class UsuarioVisual extends javax.swing.JFrame {
         );
         jPmapaLayout.setVerticalGroup(
             jPmapaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 318, Short.MAX_VALUE)
+            .addGap(0, 337, Short.MAX_VALUE)
         );
 
         jLTitle.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
@@ -212,7 +205,7 @@ public class UsuarioVisual extends javax.swing.JFrame {
             .addGroup(jPBannerLayout.createSequentialGroup()
                 .addGap(119, 119, 119)
                 .addComponent(jLTitle)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap(326, Short.MAX_VALUE))
             .addGroup(jPBannerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPmapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -246,20 +239,20 @@ public class UsuarioVisual extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPBanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jBbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarActionPerformed
-        System.out.println("Tamaño matrix "+matrix[0].length );
+         System.out.println("Tamaño matrix "+matrix[0].length );
       
-            Amplitud amplitud = new Amplitud(matrix.clone(), init,5);
+           Amplitud amplitud = new Amplitud("Principiante");
             ArrayList<Bloque> s = new ArrayList<>();
-            s = amplitud.BusquedaAmplitud();
+            s = amplitud.minimax(init);
             HiloGrafico hilo = new HiloGrafico(s, this);
             hilo.execute();
        
