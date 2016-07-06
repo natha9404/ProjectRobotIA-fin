@@ -84,7 +84,7 @@ public class UsuarioVisual extends javax.swing.JFrame {
         int columnas = 8;
         jPmapa.setLayout(new GridLayout(8, 8));
         
-        //*
+        //*AQUI CREO LOS BOTONES CON TAMAÑO 10
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
                 JButton boton= new JButton();

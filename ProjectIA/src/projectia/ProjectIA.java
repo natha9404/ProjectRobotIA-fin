@@ -27,14 +27,23 @@ public class ProjectIA {
         Amplitud amplitud = new Amplitud("Principiante");
         ArrayList<Bloque> juego = new ArrayList<>();
         Bloque raiz = new Bloque();
+      //
         raiz.setEstado(crearTablero);
         raiz.setTipo("MAX");
         raiz.setUtilidad(0);
         Coordenadas donde_estoy = amplitud.encontrarUbicacionCaballo(crearTablero, "Blanco");
         System.out.println("++++++             Ubicación: X = " + donde_estoy.x + " Y = " + donde_estoy.y);
-
         raiz.setPadre(-1);
-        Bloque unNodo = amplitud.calcularDecisionMinimax(raiz);
+        //
+        Bloque unNodo = new Bloque();
+                unNodo= amplitud.calcularDecisionMinimax(raiz);
+        
+        
+        
+        
+        
+        
+        
         System.out.println("Movimiento: " + unNodo.movimiento);
         System.out.println("Ganancia Movimiento: " + unNodo.puntosMovimiento);
         System.out.println("puntos maquina: " + unNodo.getPuntosCaballoBlanco());
@@ -45,6 +54,9 @@ public class ProjectIA {
         Coordenadas casillaActual = amplitud.encontrarUbicacionCaballo(crearTablero, "Blanco"); //El caballa blanco es el jugador de la maquina
         crearTablero = amplitud.actualizarMatriz(crearTablero, casillaActual, 0); //Eliminio la el contenido de la casilla donde estaba el caballo
         crearTablero = amplitud.actualizarMatriz(crearTablero, unNodo.ubicacion, 1); //Pongo el caballo Blancon en la nueva casilla
+        unNodo.estado = crearTablero;
+        unNodo.setPadre(-1);
+        unNodo = amplitud.calcularDecisionMinimax(unNodo);
         
         imprimir(crearTablero);
 
@@ -69,6 +81,7 @@ public class ProjectIA {
                 int fila = (int) (Math.random() * 8);
                 int columna = (int) (Math.random() * 8);
                 if (tableroEnteros[fila][columna] == 0) {
+                   
                     tableroEnteros[fila][columna] = 3;
                     hierba++;
                 }
